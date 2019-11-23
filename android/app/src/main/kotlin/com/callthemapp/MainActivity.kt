@@ -1,4 +1,4 @@
-package com.example.call_them_app
+package com.callthemapp
 
 import android.os.Bundle
 
