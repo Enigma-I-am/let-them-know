@@ -112,7 +112,8 @@ class EmailSender extends StatelessWidget {
                       child: Text('Send ${senatorData.name} this mail'),
                       onPressed: () {
                         if (provider.formKey.currentState.validate()) {
-                          provider.launchMail(senatorData.email);
+                          if (senatorData.email != null)
+                            provider.launchMail(senatorData.email);
                         }
                       },
                     ),
@@ -127,7 +128,8 @@ class EmailSender extends StatelessWidget {
                       child: Text('Send ${senatorData.name} this SMS'),
                       onPressed: () {
                         if (provider.formKey.currentState.validate()) {
-                          provider.launchMail(senatorData.email);
+                          if (senatorData.phoneNo != null)
+                            provider.launchSMS(senatorData.phoneNo);
                         }
                       },
                     ),

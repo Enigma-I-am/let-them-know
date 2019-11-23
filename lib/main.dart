@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: <Widget>[
           Container(
-            height: 290,
+            height: 260,
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: UnDraw(
               color: Colors.white,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                       50), //optional, default is the Text('Could not load illustration!').
             ),
           ),
-          const YMargin(60),
+          const YMargin(50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: Text(
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-          )
+          ),  const YMargin(50),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

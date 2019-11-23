@@ -89,7 +89,7 @@ class DirectoryProvider extends ChangeNotifier {
 
   launchMail(String data) async {
     var url =
-        'mailto:$mailTitle?subject=${mailTitle.text}&body=${mailBody.text}';
+        Uri.encodeFull('mailto:$data?subject=${mailTitle.text}&body=${mailBody.text}');
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -118,7 +118,9 @@ class DirectoryProvider extends ChangeNotifier {
       await launch(url);
     } else if (Platform.isIOS) {
       //FOR IOS
-      url = 'sms:$phone&body=${mailBody.text}';
+      url = Uri.encodeFull('sms:$phone&body=${mailBody.text}');
+
+      await launch(url);
     }
   }
 }
