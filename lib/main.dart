@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(builder: (_) => DirectoryProvider()),
       ],
       child: MaterialApp(
-        title: 'Call Them Out',
+        title: 'Let Them Know!',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -48,16 +48,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: 260,
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: UnDraw(
-              color: Colors.white,
-              illustration: UnDrawIllustration.night_calls,
-              placeholder:
-                  CircularProgressIndicator(), //optional, default is the CircularProgressIndicator().
-              errorWidget: Icon(Icons.error_outline,
-                  color: Colors.red,
-                  size:
-                      50), //optional, default is the Text('Could not load illustration!').
-            ),
+            child: Image.asset('assets/homeImage.png'),
           ),
           const YMargin(50),
           Padding(
@@ -74,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: Text(
-              'There is a bill that has passed the second reading in the Senate. This bills aim is to curb our use of social media with the reasoning that the Senate wants to curb the spreading of false information when in reality they want to limit our freedom of speech and our right to criticise them. They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
+              'There is a bill that has passed the second reading in the Senate. This bill\'s aim is to curb our use of social media with the reasoning that the Senate wants to curb the spreading of false information when in reality they want to limit our freedom of speech and our right to criticise them. They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[800],
@@ -101,7 +92,8 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-          ),  const YMargin(50),
+          ),
+          const YMargin(50),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
