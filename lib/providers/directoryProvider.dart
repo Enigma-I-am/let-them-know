@@ -76,7 +76,6 @@ class DirectoryProvider extends ChangeNotifier {
           notifyListeners();
         }
       });
-      print('lfdfdfdfdf');
 
       var senateListData = SenateListModel.fromJson(senateList);
       _names = senateListData.senatorData;
@@ -88,8 +87,8 @@ class DirectoryProvider extends ChangeNotifier {
   }
 
   launchMail(String data) async {
-    var url =
-        Uri.encodeFull('mailto:$data?subject=${mailTitle.text}&body=${mailBody.text}');
+    var url = Uri.encodeFull(
+        'mailto:$data?subject=${mailTitle.text}&body=${mailBody.text}');
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -100,10 +99,19 @@ class DirectoryProvider extends ChangeNotifier {
 
   launchCall(String number) async {
     try {
-      if (await canLaunch('tel:' '$number')) {
-        await launch('tel: ' '$number');
-      } else {
-        throw 'Could not launch tel:$number';
+      var url;
+      if (Platform.isAndroid) {
+        //FOR Android
+        if (await canLaunch('tel:' '$number')) {
+          await launch('tel: ' '$number');
+        } else {
+          throw 'Could not launch tel:$number';
+        }
+      } else if (Platform.isIOS) {
+        //FOR IOS
+        url = Uri.encodeFull('tel:$number');
+
+        await launch(url);
       }
     } catch (e) {
       print(e.toString());

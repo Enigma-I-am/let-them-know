@@ -2,7 +2,6 @@ import 'package:call_them_app/utils/margin.dart';
 import 'package:call_them_app/views/directory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:undraw/undraw.dart';
 
 import 'providers/directoryProvider.dart';
 
