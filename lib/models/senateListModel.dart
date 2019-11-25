@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class SenateListModel {
   List<SenatorData> senatorData;
 
@@ -15,7 +17,8 @@ class SenateListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> senatorData = new Map<String, dynamic>();
     if (this.senatorData != null) {
-      senatorData['senatorData'] = this.senatorData.map((v) => v.toJson()).toList();
+      senatorData['senatorData'] =
+          this.senatorData.map((v) => v.toJson()).toList();
     }
     return senatorData;
   }
@@ -26,14 +29,29 @@ class SenatorData {
   String name;
   String phoneNo;
   String email;
+  final DocumentReference reference;
 
-  SenatorData({this.state, this.name, this.phoneNo, this.email});
+  SenatorData(
+      {this.state, this.name, this.phoneNo, this.email, this.reference});
 
-  SenatorData.fromJson(Map<String, dynamic> json) {
+  SenatorData.fromJson(
+    Map<String, dynamic> json, {
+    this.reference,
+  }) {
     state = json['state'];
     name = json['name'];
     phoneNo = json['phoneNo'];
     email = json['email'];
+  }
+
+  SenatorData.fromMap(
+    Map<dynamic, dynamic> map, {
+    this.reference,
+  }) {
+    state = map['state'];
+    name = map['name'];
+    phoneNo = map['phoneNo'];
+    email = map['email'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,4 +62,7 @@ class SenatorData {
     senatorData['email'] = this.email;
     return senatorData;
   }
+
+  SenatorData.fromSnapshot(DocumentSnapshot snapshot)
+      : this.fromMap(snapshot.data, reference: snapshot.reference);
 }

@@ -3,7 +3,11 @@ import 'package:call_them_app/views/directory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/billsProvider.dart';
 import 'providers/directoryProvider.dart';
+import 'providers/menuProvider.dart';
+import 'views/menuPage.dart';
+import 'views/pages/billsPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,11 +18,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(builder: (_) => DirectoryProvider()),
+        ChangeNotifierProvider(builder: (_) => MenuProvider()),
+        ChangeNotifierProvider(builder: (_) => BillsProvider()),
       ],
       child: MaterialApp(
         title: 'Let Them Know!',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Orkney'
         ),
         debugShowCheckedModeBanner: false,
         home: HomePage(),
@@ -64,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: Text(
-              'There is a bill that has passed the second reading in the Senate. This bill\'s aim is to curb our use of social media with the reasoning that the Senate wants to curb the spreading of false information when in reality they want to limit our freedom of speech and our right to criticise them. They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
+              'They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[800],
@@ -86,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DirectoryPage(),
+                    builder: (context) => MenuPage(),
                   ),
                 );
               },
@@ -94,7 +101,6 @@ class _HomePageState extends State<HomePage> {
           ),
           const YMargin(50),
         ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      ), );
   }
 }

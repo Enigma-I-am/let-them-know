@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:call_them_app/models/senateListModel.dart';
 import 'package:call_them_app/utils/senateList.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DirectoryProvider extends ChangeNotifier {
+  DocumentSnapshot querySnapshot;
+  Stream<QuerySnapshot> homeFeeds =
+      Firestore.instance.collection('senatorsDB').snapshots();
   final TextEditingController filter = new TextEditingController();
   final TextEditingController mailTitle = new TextEditingController();
   final TextEditingController mailBody = new TextEditingController();
@@ -65,7 +69,8 @@ class DirectoryProvider extends ChangeNotifier {
     }
   }
 
-  loadData(context) {
+  loadData(context) async {
+    Firestore.instance.enablePersistence(true);
     try {
       filter.addListener(() {
         if (filter.text.isEmpty) {
@@ -77,9 +82,22 @@ class DirectoryProvider extends ChangeNotifier {
         }
       });
 
-      var senateListData = SenateListModel.fromJson(senateList);
-      _names = senateListData.senatorData;
-      notifyListeners();
+      try {
+       
+          QuerySnapshot t =
+            await Firestore.instance.collection('senatorsDB').getDocuments();
+        if (t != null && t.documents != null) {
+          t.documents.forEach((f) {
+            SenatorData data = SenatorData.fromMap(f.data);
+            _names.add(data);
+            notifyListeners();
+          });
+        } 
+      } catch (e) {
+        print(e.toString());
+      }
+      // _names = senateListData.senatorData;
+
       // print(senateListData.toJson());
     } catch (e) {
       print(e.toString());
