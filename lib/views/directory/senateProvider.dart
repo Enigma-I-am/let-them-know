@@ -49,18 +49,7 @@ class SenateProvider extends ChangeNotifier {
   void searchPressed() {
     if (this.searchIcon.icon == Icons.search) {
       this.searchIcon = new Icon(Icons.close);
-      this.appBarTitle = Container(
-        decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(.06),
-            borderRadius: BorderRadius.circular(20)),
-        child: new TextField(
-          controller: filter,
-          decoration: new InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: new Icon(Icons.search),
-              hintText: 'Search...'),
-        ),
-      );
+     
     } else {
       this.searchIcon = new Icon(Icons.search);
       this.appBarTitle = null;

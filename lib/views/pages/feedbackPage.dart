@@ -76,7 +76,7 @@ class FeedbackPage extends StatelessWidget {
                         textColor: Colors.blueAccent[700],
                         child: Text('Send Us Your Feedback'),
                         onPressed: () {
-                          if(!provider.formKey.currentState.validate()){
+                          if(provider.formKey.currentState.validate()){
                             provider.sendFeedback(context);
                           }
                         },

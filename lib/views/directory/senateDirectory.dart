@@ -34,14 +34,6 @@ class _SenateDirectoryState extends State<SenateDirectory> {
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
-        title: provider.appBarTitle,
-        actions: <Widget>[
-          new IconButton(
-            icon: provider.searchIcon,
-            onPressed: provider.searchPressed,
-          ),
-        ],
       ),
       backgroundColor: Colors.white,
       body: ListView(
@@ -68,6 +60,26 @@ class _SenateDirectoryState extends State<SenateDirectory> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
+                const YMargin(20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(.06),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: new TextField(
+                    controller: provider.filter,
+                    onTap: provider.searchPressed,
+                    decoration: new InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: provider.searchIcon == Icon(Icons.search)
+                            ? provider.searchIcon
+                            : null,
+                        suffixIcon: provider.searchIcon == Icon(Icons.search)
+                            ? null
+                            : provider.searchIcon,
+                        hintText: 'Search...'),
+                  ),
+                )
               ],
             ),
           ),

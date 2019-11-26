@@ -26,6 +26,10 @@ class FeedbackProvider extends ChangeNotifier {
 
       formKey.currentState.reset();
       notifyListeners();
+    }).then((onValue) {
+      name.text = '';
+      feedback.text = '';
+      notifyListeners();
     });
   }
 }

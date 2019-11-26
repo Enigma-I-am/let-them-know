@@ -1,5 +1,6 @@
 import 'package:call_them_app/providers/menuProvider.dart';
 import 'package:call_them_app/utils/margin.dart';
+import 'package:call_them_app/utils/margin.dart' as prefix0;
 import 'package:call_them_app/views/pages/billsPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
@@ -75,7 +76,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   child: Text('Let Them\nKnow !',
                       style: TextStyle(color: Colors.white, fontSize: 22)),
                 ),
-                const YMargin(200),
+                YMargin(prefix0.screenHeight(context, percent: 0.2)),
                 MenuItem(
                   title: 'Bills',
                   icon: Icons.receipt,
@@ -109,8 +110,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         context: context,
                         builder: (_) => new AlertDialog(
                               title: new Text("Coming Soon ..."),
-                              content:
-                                  new Text("Information on government policies"),
+                              content: new Text(
+                                  "Information on government policies"),
                             ));
                   },
                 ),
@@ -144,7 +145,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     });
                   },
                 ),
-                const YMargin(200),
               ],
             ),
           ),
