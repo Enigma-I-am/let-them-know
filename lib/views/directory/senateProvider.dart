@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:call_them_app/models/senateListModel.dart';
-import 'package:call_them_app/utils/senateList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DirectoryProvider extends ChangeNotifier {
+class SenateProvider extends ChangeNotifier {
   DocumentSnapshot querySnapshot;
   Stream<QuerySnapshot> homeFeeds =
       Firestore.instance.collection('senatorsDB').snapshots();

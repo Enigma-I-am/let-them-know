@@ -1,53 +1,36 @@
+import 'package:call_them_app/views/pages/billsPage.dart';
+import 'package:call_them_app/views/pages/directoryPage.dart';
+import 'package:call_them_app/views/pages/feedbackPage.dart';
+import 'package:call_them_app/views/pages/policiesPage.dart';
 import 'package:flutter/material.dart';
 
 class MenuProvider extends ChangeNotifier {
-  bool isCollapsed = true;
-  final Duration duration = const Duration(milliseconds: 200);
+  bool _isCollapsed = true;
+  bool get isCollapsed => _isCollapsed;
 
-  AnimationController _controller;
-  AnimationController get controller => _controller;
-
-  Animation<double> _scaleAnimation;
-  Animation<double> get scaleAnimation => _scaleAnimation;
-
-  Animation<double> _menuScaleAnimation;
-  Animation<double> get menuScaleAnimation => _menuScaleAnimation;
-
-  Animation<Offset> _slideAnimation;
-
-  Animation<Offset> get slideAnimation => _slideAnimation;
-
-  set slideAnimation(Animation<Offset> val) {
-    _slideAnimation = val;
+  set isCollapsed(bool val) {
+    _isCollapsed = val;
     notifyListeners();
   }
 
-  set menuScaleAnimation(Animation<double> val) {
-    _menuScaleAnimation = val;
+  var _index = 0;
+  get index => _index;
+
+  set index(val) {
+    _index = val;
     notifyListeners();
   }
 
-  set scaleAnimation(Animation<double> val) {
-    _scaleAnimation = val;
-    notifyListeners();
-  }
+  menuList() => [
+        BillsPage(isCollapsed: _isCollapsed),
+        PoliciesPage(),
+        DirectoryPages(),
+        FeedbackPage(),
+      ];
 
-  set controller(val) {
-    _controller = val;
-    notifyListeners();
-  }
+  selectPage(index) {
+    _index = index;
 
-  void loadData(TickerProvider vsync) {
-    print('fdfd');
-    _controller = AnimationController(vsync: vsync, duration: duration);
-    notifyListeners();
-    _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
-    notifyListeners();
-    _menuScaleAnimation =
-        Tween<double>(begin: 0.5, end: 1).animate(_controller);
-    notifyListeners();
-    _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
-        .animate(_controller);
     notifyListeners();
   }
 }

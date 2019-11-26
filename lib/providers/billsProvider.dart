@@ -24,6 +24,7 @@ class BillsProvider extends ChangeNotifier {
     'Transport',
     'Security'
   ];
+
   String get searchText => _searchText;
 
   Icon _searchIcon = new Icon(Icons.search);
@@ -47,26 +48,9 @@ class BillsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void searchPressed() {
-    if (this.searchIcon.icon == Icons.search) {
-      this.searchIcon = new Icon(Icons.close);
-      this.appBarTitle = Container(
-        decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(.06),
-            borderRadius: BorderRadius.circular(20)),
-        child: new TextField(
-          controller: filter,
-          decoration: new InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: new Icon(Icons.search),
-              hintText: 'Search...'),
-        ),
-      );
-    } else {
-      this.searchIcon = new Icon(Icons.search);
-      this.appBarTitle = null;
-      filter.clear();
-    }
+  onTagSelect(tag){
+    filter.text = tag;
+    notifyListeners();
   }
 
   loadData(context) async {

@@ -7,32 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spring_button/spring_button.dart';
 
-class BillsPage extends StatefulWidget {
+class PoliciesPage extends StatefulWidget {
   final bool isCollapsed;
 
-  const BillsPage({Key key, this.isCollapsed}) : super(key: key);
+  const PoliciesPage({Key key, this.isCollapsed}) : super(key: key);
   @override
-  _BillsPageState createState() => _BillsPageState();
+  _PoliciesPageState createState() => _PoliciesPageState();
 }
 
-class _BillsPageState extends State<BillsPage> {
-  BillsProvider provider;
-
-  @override
-  void initState() {
-    loadData();
-
-    super.initState();
-  }
-
-  loadData() async {
-    await Future.delayed(Duration(seconds: 1));
-    provider.loadData(context);
-  }
-
+class _PoliciesPageState extends State<PoliciesPage> {
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of<BillsProvider>(context);
+    var provider = Provider.of<BillsProvider>(context);
     return Container(
       height: screenHeight(context) - 100,
       child: Column(
@@ -53,7 +39,6 @@ class _BillsPageState extends State<BillsPage> {
               ],
             ),
             child: new TextField(
-              controller: provider.filter,
               decoration: new InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: new Icon(Icons.search),
@@ -86,8 +71,7 @@ class _BillsPageState extends State<BillsPage> {
 class BuildUI extends StatelessWidget {
   final BillsProvider provider;
   final bool isCollapsed;
-  const BuildUI(this.isCollapsed, {Key key, @required this.provider})
-      : super(key: key);
+  const BuildUI(this.isCollapsed, {Key key, this.provider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +85,7 @@ class BuildUI extends StatelessWidget {
             width: 45,
             child: CircularProgressIndicator(),
           ));
-        return BuildFeedList(provider, snapshot.data.documents, isCollapsed);
+        return BuildFeedList(snapshot.data.documents, isCollapsed);
       },
     );
   }
@@ -110,52 +94,35 @@ class BuildUI extends StatelessWidget {
 class BuildFeedList extends StatelessWidget {
   final List<DocumentSnapshot> snapshot;
   final bool isCollapsed;
-  final BillsProvider provider;
-  const BuildFeedList(this.provider, this.snapshot, this.isCollapsed);
+  const BuildFeedList(this.snapshot, this.isCollapsed);
 
   @override
-  Widget build(BuildContext context) {
-    return snapshot.length > 0
-        ? Column(children: [
-            for (var data in snapshot.reversed.toList())
-              if (provider.filter.text.isNotEmpty)
-                if (data.data['title']
-                        .toLowerCase()
-                        .contains(provider.searchText.toLowerCase()) ||
-                    data.data['desc']
-                        .toLowerCase()
-                        .contains(provider.searchText.toLowerCase()) ||
-                    data.data['category']
-                        .toLowerCase()
-                        .contains(provider.searchText.toLowerCase()))
-                  NegBillsWidget(isCollapsed: isCollapsed, data: data)
-                else
-                  Container()
-              else
-                NegBillsWidget(isCollapsed: isCollapsed, data: data)
-          ])
-        : Center(
-            child: Column(
-              children: <Widget>[
-                const YMargin(60),
-                Opacity(
-                  opacity: 0.5,
-                  child: Container(
-                    width: 160,
-                    height: 160,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(90),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                'https://media.istockphoto.com/vectors/open-box-icon-vector-id635771440?k=6&m=635771440&s=612x612&w=0&h=IESJM8lpvGjMO_crsjqErVWzdI8sLnlf0dljbkeO7Ig=',
-                                scale: 3))),
-                  ),
+  Widget build(BuildContext context) => snapshot.length > 0
+      ? Column(children: [
+          for (var data in snapshot.reversed.toList())
+            NegBillsWidget(isCollapsed: isCollapsed, data: data)
+        ])
+      : Center(
+          child: Column(
+            children: <Widget>[
+              const YMargin(60),
+              Opacity(
+                opacity: 0.5,
+                child: Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(90),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                              'https://media.istockphoto.com/vectors/open-box-icon-vector-id635771440?k=6&m=635771440&s=612x612&w=0&h=IESJM8lpvGjMO_crsjqErVWzdI8sLnlf0dljbkeO7Ig=',
+                              scale: 3))),
                 ),
-                const YMargin(20),
-                Text('No Posts'),
-              ],
-            ),
-          );
-  }
+              ),
+              const YMargin(20),
+              Text('No Posts'),
+            ],
+          ),
+        );
 }

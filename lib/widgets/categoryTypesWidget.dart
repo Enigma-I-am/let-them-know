@@ -1,11 +1,14 @@
 import 'dart:math';
 
+import 'package:call_them_app/providers/billsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:spring_button/spring_button.dart';
 
 class CategoryTypes extends StatelessWidget {
   final String tag;
-  const CategoryTypes({
+  final BillsProvider provider;
+  const CategoryTypes(
+    this.provider, {
     Key key,
     @required this.tag,
   }) : super(key: key);
@@ -59,7 +62,10 @@ class CategoryTypes extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () {},
+      onTap: () {
+       // print(tag);
+        provider.onTagSelect(tag);
+      },
     );
   }
 }

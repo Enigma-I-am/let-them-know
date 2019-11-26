@@ -1,18 +1,18 @@
-import 'package:call_them_app/providers/directoryProvider.dart';
 import 'package:call_them_app/utils/margin.dart';
+import 'package:call_them_app/views/directory/senateProvider.dart';
 import 'package:call_them_app/views/emailSender.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DirectoryPage extends StatefulWidget {
-  DirectoryPage({Key key}) : super(key: key);
+class SenateDirectory extends StatefulWidget {
+  SenateDirectory({Key key}) : super(key: key);
 
   @override
-  _DirectoryPageState createState() => _DirectoryPageState();
+  _SenateDirectoryState createState() => _SenateDirectoryState();
 }
 
-class _DirectoryPageState extends State<DirectoryPage> {
-  DirectoryProvider provider;
+class _SenateDirectoryState extends State<SenateDirectory> {
+  SenateProvider provider;
   @override
   void initState() {
     loadData();
@@ -27,7 +27,7 @@ class _DirectoryPageState extends State<DirectoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of<DirectoryProvider>(context);
+    provider = Provider.of<SenateProvider>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),

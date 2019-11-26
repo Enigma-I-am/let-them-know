@@ -7,6 +7,7 @@ class NegativeBills {
   String category;
   String details;
   bool isPassed;
+  String imageUrl;
   final DocumentReference reference;
 
   NegativeBills({
@@ -16,6 +17,7 @@ class NegativeBills {
     this.category,
     this.details,
     this.isPassed,
+    this.imageUrl,
     this.reference,
   });
 
@@ -25,10 +27,10 @@ class NegativeBills {
   }) {
     title = json['title'];
     desc = json['desc'];
-    title = json['title'];
     changeUrl = json['changeUrl'];
     category = json['category'];
     details = json['details'];
+    imageUrl = json['imageUrl'];
     isPassed = json['isPassed'];
   }
 
@@ -41,18 +43,20 @@ class NegativeBills {
     changeUrl = map['changeUrl'];
     category = map['category'];
     details = map['details'];
+    imageUrl = map['imageUrl'];
     isPassed = map['isPassed'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> senatorData = new Map<String, dynamic>();
-    senatorData['title'] = this.title;
-    senatorData['desc'] = this.desc;
-    senatorData['changeUrl'] = this.changeUrl;
-    senatorData['category'] = this.category;
-    senatorData['details'] = this.details;
-    senatorData['isPassed'] = this.isPassed;
-    return senatorData;
+    final Map<String, dynamic> json = new Map<String, dynamic>();
+    json['title'] = this.title;
+    json['desc'] = this.desc;
+    json['changeUrl'] = this.changeUrl;
+    json['category'] = this.category;
+    json['details'] = this.details;
+    json['imageUrl'] = this.imageUrl;
+    json['isPassed'] = this.isPassed;
+    return json;
   }
 
   NegativeBills.fromSnapshot(DocumentSnapshot snapshot)

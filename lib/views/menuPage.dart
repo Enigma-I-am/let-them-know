@@ -1,6 +1,7 @@
 import 'package:call_them_app/providers/menuProvider.dart';
 import 'package:call_them_app/utils/margin.dart';
 import 'package:call_them_app/views/pages/billsPage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   MenuProvider provider;
-  bool isCollapsed = true;
   double screenWidth, screenHeight;
   final Duration duration = const Duration(milliseconds: 200);
   AnimationController _controller;
@@ -46,7 +46,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     screenWidth = size.width;
 
     return Scaffold(
-      backgroundColor: isCollapsed ? null : Colors.blueAccent[700],
+      backgroundColor: provider.isCollapsed ? null : Colors.blueAccent[700],
       body: Stack(
         children: <Widget>[
           menu(context),
@@ -79,18 +79,70 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                 MenuItem(
                   title: 'Bills',
                   icon: Icons.receipt,
+                  onTap: () {
+                    provider.selectPage(0);
+                    setState(() {
+                      if (provider.isCollapsed)
+                        _controller.forward();
+                      else
+                        _controller.reverse();
+
+                      provider.isCollapsed = !provider.isCollapsed;
+                    });
+                  },
                 ),
                 MenuItem(
                   title: 'Policies',
                   icon: Icons.people,
+                  onTap: () {
+                    /*   provider.selectPage(1);
+                    setState(() {
+                      if (provider.isCollapsed)
+                        _controller.forward();
+                      else
+                        _controller.reverse();
+
+                      provider.isCollapsed = !provider.isCollapsed;
+                    }); */
+
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (_) => new AlertDialog(
+                              title: new Text("Coming Soon ..."),
+                              content:
+                                  new Text("Information on government policies"),
+                            ));
+                  },
                 ),
                 MenuItem(
                   title: 'Directory',
                   icon: Icons.contacts,
+                  onTap: () {
+                    provider.selectPage(2);
+                    setState(() {
+                      if (provider.isCollapsed)
+                        _controller.forward();
+                      else
+                        _controller.reverse();
+
+                      provider.isCollapsed = !provider.isCollapsed;
+                    });
+                  },
                 ),
                 MenuItem(
                   title: 'Feedback',
                   icon: Icons.mail,
+                  onTap: () {
+                    provider.selectPage(3);
+                    setState(() {
+                      if (provider.isCollapsed)
+                        _controller.forward();
+                      else
+                        _controller.reverse();
+
+                      provider.isCollapsed = !provider.isCollapsed;
+                    });
+                  },
                 ),
                 const YMargin(200),
               ],
@@ -106,8 +158,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
       duration: duration,
       top: 0,
       bottom: 0,
-      left: isCollapsed ? 0 : 0.3 * screenWidth,
-      right: isCollapsed ? 0 : -0.2 * screenWidth,
+      left: provider.isCollapsed ? 0 : 0.3 * screenWidth,
+      right: provider.isCollapsed ? 0 : -0.2 * screenWidth,
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: ClipRRect(
@@ -117,16 +169,16 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             borderRadius: BorderRadius.all(Radius.circular(40)),
             elevation: 8,
             child: InkWell(
-              onTap: isCollapsed
+              onTap: provider.isCollapsed
                   ? null
                   : () {
                       setState(() {
-                        if (isCollapsed)
+                        if (provider.isCollapsed)
                           _controller.forward();
                         else
                           _controller.reverse();
 
-                        isCollapsed = !isCollapsed;
+                        provider.isCollapsed = !provider.isCollapsed;
                       });
                     },
               child: SingleChildScrollView(
@@ -147,23 +199,31 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                             child: Icon(Icons.menu, color: Colors.grey),
                             onTap: () {
                               setState(() {
-                                if (isCollapsed)
+                                if (provider.isCollapsed)
                                   _controller.forward();
                                 else
                                   _controller.reverse();
 
-                                isCollapsed = !isCollapsed;
+                                provider.isCollapsed = !provider.isCollapsed;
                               });
                             },
                           ),
                           const XMargin(30),
-                          Text("Bills",
+                          Text(
+                              provider.index == 0
+                                  ? "Bills"
+                                  : provider.index == 1
+                                      ? 'Policies'
+                                      : provider.index == 2
+                                          ? 'Directory'
+                                          : 'Feedback',
                               style: TextStyle(
                                   fontSize: 24, color: Colors.black87)),
                           Spacer()
                         ],
                       ),
-                      BillsPage(isCollapsed: isCollapsed),
+                      const YMargin(10),
+                      provider.menuList()[provider.index]
                     ],
                   ),
                 ),

@@ -1,10 +1,12 @@
 import 'package:call_them_app/models/negBillsModel.dart';
 import 'package:call_them_app/utils/margin.dart';
+import 'package:call_them_app/views/directory/senateDirectory.dart';
 import 'package:flutter/material.dart';
 import 'package:spring_button/spring_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BillsDetailPage extends StatefulWidget {
-  NegativeBills negativeBills;
+  final NegativeBills negativeBills;
   BillsDetailPage({Key key, this.negativeBills}) : super(key: key);
 
   @override
@@ -26,10 +28,14 @@ class _BillsDetailPageState extends State<BillsDetailPage> {
                 color: Colors.grey[300],
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                        'https://images.pexels.com/photos/3217928/pexels-photo-3217928.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')),
+                    image: NetworkImage(widget?.negativeBills?.imageUrl ?? '')),
               ),
             ),
+          ),
+          Container(
+            width: screenWidth(context),
+            height: screenHeight(context, percent: 0.36),
+            decoration: BoxDecoration(color: Colors.black26),
           ),
           ListView(
             children: <Widget>[
@@ -75,7 +81,7 @@ class _BillsDetailPageState extends State<BillsDetailPage> {
                         child: ListTile(
                           contentPadding: EdgeInsets.all(18),
                           title: Text(
-                            'Social Meda Bill',
+                            widget?.negativeBills?.title ?? '',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(
@@ -87,7 +93,7 @@ class _BillsDetailPageState extends State<BillsDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  "SOCIAL MEDIA",
+                                  widget?.negativeBills?.category ?? '',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Colors.blueAccent[700],
@@ -96,7 +102,7 @@ class _BillsDetailPageState extends State<BillsDetailPage> {
                                 ),
                                 const YMargin(20),
                                 Text(
-                                  "There is a bill that has passed the second reading in the Senate. This bill's aim is to curb our use of social media with the reasoning that the Senate wants to curb the spreading of false information when in reality they want to limit our freedom of speech and our right to criticize them. They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!",
+                                  widget?.negativeBills?.desc ?? '',
                                   style: TextStyle(
                                       height: 1.4,
                                       color: Colors.grey,
@@ -124,20 +130,47 @@ class _BillsDetailPageState extends State<BillsDetailPage> {
                         color: Colors.blueAccent[700],
                         textColor: Colors.white,
                         child: Text('Contact Your Senators'),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SenateDirectory(),
+                            ),
+                          );
+                        },
                       ),
+                    ),
+                    const YMargin(30),
+                    Text(
+                      "Sign the Petition!",
+                      style: TextStyle(
+                          height: 1.4,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16),
                     ),
                     const YMargin(20),
                     Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: OutlineButton(
-                        color: Colors.blueAccent[700],
-                        textColor: Colors.blueAccent[700],
-                        child: Text('Send  this SMS'),
-                        onPressed: () {},
-                      ),
-                    ),
+                        width: double.infinity,
+                        height: 50,
+                        child: OutlineButton(
+                          color: Colors.blueAccent[700],
+                          textColor: Colors.blueAccent[700],
+                          child: SpringButton(
+                            SpringButtonType.OnlyScale,
+                            Image.asset(
+                              'assets/change.png',
+                              scale: 3,
+                            ),
+                            onTap: () async {
+                              var url = Uri.encodeFull(
+                                  widget.negativeBills.changeUrl);
+
+                              await launch(url);
+                            },
+                          ),
+                          onPressed: null,
+                        )),
                     const YMargin(50)
                   ],
                 ),

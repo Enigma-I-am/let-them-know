@@ -54,18 +54,11 @@ class NegBillsWidget extends StatelessWidget {
                           color: Colors.grey[300],
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://images.pexels.com/photos/3217928/pexels-photo-3217928.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500')),
+                              image: NetworkImage(feedData.imageUrl ?? '')),
                           borderRadius: BorderRadius.circular(5)),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              BillsDetailPage(negativeBills: feedData),
-                        ),
-                      );
+                     
                     },
                   ),
                 ),
@@ -76,11 +69,12 @@ class NegBillsWidget extends StatelessWidget {
                   contentPadding: EdgeInsets.symmetric(horizontal: 8),
                   onTap: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BillsDetailPage(),
-                      ),
-                    );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BillsDetailPage(negativeBills: feedData),
+                        ),
+                      );
                   },
                   title: Padding(
                     padding: EdgeInsets.only(top: 10),

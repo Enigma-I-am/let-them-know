@@ -1,13 +1,12 @@
 import 'package:call_them_app/utils/margin.dart';
-import 'package:call_them_app/views/directory.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/billsProvider.dart';
-import 'providers/directoryProvider.dart';
+import 'providers/feedbackProvider.dart';
 import 'providers/menuProvider.dart';
+import 'views/directory/senateProvider.dart';
 import 'views/menuPage.dart';
-import 'views/pages/billsPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,16 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => DirectoryProvider()),
+        ChangeNotifierProvider(builder: (_) => SenateProvider()),
         ChangeNotifierProvider(builder: (_) => MenuProvider()),
         ChangeNotifierProvider(builder: (_) => BillsProvider()),
+        ChangeNotifierProvider(builder: (_) => FeedbackProvider()),
       ],
       child: MaterialApp(
         title: 'Let Them Know!',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Orkney'
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Orkney'),
         debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),
@@ -71,7 +68,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
             child: Text(
-              'They are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
+              'Let The Know! is a platform where Nigerians can be kept in the loop about bills, policies and laws that concern us and affect us directly/indirectly. Those in power are representatives of Nigerians and have no right to do anything contrary to our wish because this is a democracy and they are to exercise our wishes. This is not our wish!',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[800],
@@ -101,6 +98,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const YMargin(50),
         ],
-      ), );
+      ),
+    );
   }
 }

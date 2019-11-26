@@ -1,12 +1,13 @@
 import 'package:call_them_app/models/senateListModel.dart';
-import 'package:call_them_app/providers/directoryProvider.dart';
 import 'package:call_them_app/utils/emailData.dart';
 import 'package:call_them_app/utils/margin.dart';
 import 'package:flutter/material.dart';
 
+import 'directory/senateProvider.dart';
+
 class EmailSender extends StatelessWidget {
   final SenatorData senatorData;
-  final DirectoryProvider provider;
+  final SenateProvider provider;
   const EmailSender(
       {Key key, @required this.senatorData, @required this.provider})
       : super(key: key);
